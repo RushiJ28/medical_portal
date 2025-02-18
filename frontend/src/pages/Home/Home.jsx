@@ -11,7 +11,7 @@ const Home = () => {
           <a href="/registerpatient">Register Patient</a>
         </div>
         <div className="feature">
-          <h3>Search Register</h3>
+          <h3>Search Patient</h3>
           <p>View and Manage medical history of patients</p>
           <a href="/searchpatient">View Medical History</a>
         </div>
