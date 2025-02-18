@@ -15,4 +15,4 @@ async function createHash(password) {
     });
 }
 
-module.export = createHash;
+module.exports = createHash;
