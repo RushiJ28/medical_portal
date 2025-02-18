@@ -1,10 +1,26 @@
 import "./Signin.css";
 import { useState } from "react";
 import CustomForm from "../../components/CustomForm/CustomForm";
+import Button from "../../components/Button/Button";
+import { makePOSTrequest } from "../../utils/api";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // const [message, setMessage] = useState("");
+
+  const submitData = async (e) => {
+    e.preventDefault(); //Do not refresh the browser as it may cause issues while passing data to backend
+    const res = await makePOSTrequest("http://localhost:5000/users/signin", {
+      email,
+      password,
+    });
+
+    if (res.status === 200) {
+      localStorage.setItem("token", res.token);
+    }
+    // setMessage(res.message);
+  };
 
   return (
     <div className="signin-container">
@@ -18,6 +34,7 @@ const Signin = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <Button onClick={submitData} value="Sign In" />
       </CustomForm>
     </div>
   );
