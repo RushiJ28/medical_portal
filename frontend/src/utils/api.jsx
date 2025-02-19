@@ -12,6 +12,7 @@ export const makePOSTrequest = async (url, data, token = "") => {
     });
 
     const responseData = await response.json();
+    console.log(responseData);
     return responseData;
   } catch (err) {
     console.error("Error posting data:", data);
