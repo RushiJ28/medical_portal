@@ -10,6 +10,7 @@ import RegisterDoctor from "./pages/RegisterDoctor/RegisterDoctor.jsx";
 import SearchDoctor from "./pages/SearchDoctor/SearchDoctor.jsx";
 import Error from "./components/Error/Error.jsx";
 import Layout from "./Layout.jsx";
+import AdminPanel from "./pages/AdminPanel/AdminPanel.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: "/registerpatient", element: <RegisterPatient /> },
       { path: "/registerdoctor", element: <RegisterDoctor /> },
       { path: "/searchdoctor", element: <SearchDoctor /> },
+      { path: "/adminpanel", element: <AdminPanel /> },
     ],
   },
 ]);
