@@ -40,46 +40,72 @@ const RegisterDoctor = () => {
 
     console.log(formData);
 
-    const res = await makePOSTrequestForMultipleFormData(
-      "http://localhost:5000/doctors/registerdoctor",
-      formData,
-      localStorage.getItem("token")
-    );
-    setMessage(res.msg);
+    try {
+      const res = await makePOSTrequestForMultipleFormData(
+        "http://localhost:5000/doctors/registerdoctor",
+        formData,
+        localStorage.getItem("token")
+      );
+
+      console.log("API Response:", res);
+
+      if (res && res.msg) {
+        setMessage(res.msg);
+        setIDNumber("");
+        setUserName("");
+        setPassword("");
+        setEmail("");
+        setPhone("");
+        setImage(null);
+      } else {
+        setMessage("Failed to register doctor.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setMessage("Something went wrong, please try again.");
+    }
   };
 
   return (
     <div className="registerdoctor-container">
+      <h2>Register Doctor</h2>
       <CustomForm>
-        <span>Doctor Image:</span>
-        <br />
-        <br />
+        <label>Doctor Image:</label>
         <CustomForm.Image onChange={(e) => setImage(e.target.files[0])} />
-        <br />
-        <br />
+
+        <label>ID Number:</label>
         <CustomForm.IDNumber
           value={idnumber}
           onChange={(e) => setIDNumber(e.target.value)}
         />
+
+        <label>Username:</label>
         <CustomForm.UserName
           value={username}
           onChange={(e) => setUserName(e.target.value)}
         />
+
+        <label>Email:</label>
         <CustomForm.Email
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
+        <label>Password:</label>
         <CustomForm.Password
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
+        <label>Phone:</label>
         <CustomForm.Phone
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
+
         <Button value="Register Doctor" onClick={submitDoctor} />
       </CustomForm>
-      {message}
+      {message && <p className="message">{message}</p>}
     </div>
   );
 };
