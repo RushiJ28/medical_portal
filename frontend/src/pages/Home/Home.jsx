@@ -1,4 +1,5 @@
 import "./Home.css";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -8,12 +9,12 @@ const Home = () => {
         <div className="feature">
           <h3>Patient Register</h3>
           <p>Register new patients into the system</p>
-          <a href="/registerpatient">Register Patient</a>
+          <Link to="/registerpatient">Register Patient</Link>
         </div>
         <div className="feature">
           <h3>Search Patient</h3>
           <p>View and Manage medical history of patients</p>
-          <a href="/searchpatient">View Medical History</a>
+          <Link to="/searchpatient">View Medical History</Link>
         </div>
       </div>
     </div>

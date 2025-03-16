@@ -1,37 +1,49 @@
+/* Home Container */
 .home-container {
   max-width: 80vw;
   margin: 20px auto;
   padding: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
 }
 
+/* Features Section (Aligned Center) */
 .features {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap; /* Ensures responsiveness */
 }
 
+/* Individual Feature Box */
 .feature {
-  display: flex;
-  flex: 1;
-  margin-right: 20px;
+  width: 300px;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  align-items: center;
-  flex-direction: column;
+  border-radius: 10px;
+  text-align: center;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out;
 }
 
-.feature:last-child {
-  margin-right: 0;
+.feature:hover {
+  transform: scale(1.05);
 }
 
+/* Headings */
 .feature h3 {
   margin-top: 0;
+  color: #007bff;
 }
 
+/* Paragraph */
 .feature p {
   margin-bottom: 15px;
+  color: #555;
 }
 
+/* Buttons (Styled Links) */
 .feature a {
   display: inline-block;
   padding: 10px 20px;
@@ -39,18 +51,22 @@
   color: #fff;
   text-decoration: none;
   border-radius: 10px;
-  margin: 0 auto;
-  margin-top: auto;
-  width: auto;
+  transition: background 0.3s ease-in-out;
+  font-weight: bold;
 }
 
 .feature a:hover {
   background-color: #0056b3;
 }
 
-/* If th screen with resolution larger than 1024 pixels, set the width to 1000px */
-@media screen and (min-width: 1024px) {
-  .home-container {
-    width: 1000px;
+/* Responsive Design for Small Screens */
+@media screen and (max-width: 800px) {
+  .features {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature {
+    width: 90%;
   }
 }
