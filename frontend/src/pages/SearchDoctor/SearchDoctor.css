@@ -1,18 +1,71 @@
+/* Container for search form */
 .searchdoctor-container {
   max-width: 70vw;
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: Arial, sans-serif;
 }
 
+/* Title styling */
 .searchdoctor-container h2 {
   margin-bottom: 20px;
-  font-size: 24px;
+  font-size: 26px;
+  color: #333;
 }
 
-@media screen and (min-width: 800px) {
-  .registerpatient-container {
-    width: 500px;
+/* Styling for the doctor card (details display) */
+.doctor-card {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+
+/* Doctor details text */
+.doctor-card h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #007bff;
+}
+
+.doctor-card p {
+  font-size: 16px;
+  margin: 8px 0;
+  color: #444;
+}
+
+.doctor-card strong {
+  color: #0056b3;
+}
+
+/* Message styling for errors */
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 800px) {
+  .searchdoctor-container {
+    width: 90vw;
+    padding: 15px;
+  }
+
+  .doctor-card {
+    padding: 15px;
+  }
+
+  .searchdoctor-container h2 {
+    font-size: 22px;
   }
 }

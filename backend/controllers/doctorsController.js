@@ -95,6 +95,35 @@ const doctorsController = {
       }
     }
   },
+
+  searchDoctor: async (req, res) => {
+    try {
+      const db = await getDatabase();
+
+      const doctor = await db.collection("doctors").findOne(
+        {
+          idnumber: req.query.idnumber,
+        },
+        { projection: { _id: 0, password: 0 } } //projection helps to omit fields, if we set the value to 0
+      );
+
+      if (doctor) {
+        const doctorJson = JSON.stringify(doctor);
+        return returnStatus(res, 200, false, "Doctor Found", {
+          doctor: doctorJson,
+        });
+      } else {
+        return returnStatus(res, 400, true, "Doctor Not Found");
+      }
+    } catch (err) {
+      console.log(err);
+      return returnStatus(res, 500, true, "Internal Server Error");
+    } finally {
+      if (client) {
+        await client.close();
+      }
+    }
+  },
 };
 
 module.exports = doctorsController;

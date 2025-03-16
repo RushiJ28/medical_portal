@@ -67,6 +67,8 @@ router.post(
   doctorsController.registerDoctor
 );
 
+router.get("/search", doctorsController.searchDoctor);
+
 router.use((err, req, res, next) => {
   if (req.uploadedImageFilePath) {
     fs.unlink(req.uploadedImageFilePath, (err) => {
