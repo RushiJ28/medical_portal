@@ -1,22 +1,60 @@
 import "./RegisterDoctor.css";
 import CustomForm from "../../components/CustomForm/CustomForm";
 import { useState } from "react";
+import Button from "../../components/Button/Button";
+import { makePOSTrequestForMultipleFormData } from "../../utils/api";
 
 const RegisterDoctor = () => {
-  //define state with different variables and assigned them with empty string
-  //   const [image, setImage] = useState(null);
+  // define state with different variables and assigned them with empty string
+  const [image, setImage] = useState(null);
   const [idnumber, setIDNumber] = useState("");
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+
+  const submitDoctor = async (e) => {
+    e.preventDefault();
+
+    if (!image) {
+      setMessage("No image selected");
+      return;
+    }
+
+    const formData = new FormData();
+    // file below will then be received from the backend using formidable, 'file' below is a made up key name so it is a form data key.A formData in JavaScript is an instance of the FormData class, which is used to construct a set of key/value pairs representing form fields and their values. It's commonly used to construct data to be sent in an HTTP request, particularly when dealing with forms or file uploads.
+    formData.append("file", image);
+
+    //data below will then be recieved from the backend using res.body.data, 'data' below is a form data key, a made up name
+    formData.append(
+      "data",
+      JSON.stringify({
+        idnumber,
+        username,
+        password,
+        email,
+        phone,
+      })
+    );
+
+    console.log(formData);
+
+    const res = await makePOSTrequestForMultipleFormData(
+      "http://localhost:5000/doctors/registerdoctor",
+      formData,
+      localStorage.getItem("token")
+    );
+    setMessage(res.msg);
+  };
 
   return (
     <div className="registerdoctor-container">
       <CustomForm>
         <span>Doctor Image:</span>
         <br />
-        {/* <CustomForm.Image onChange={(e)=> setImage(e.target.files[0])} /> */}
+        <br />
+        <CustomForm.Image onChange={(e) => setImage(e.target.files[0])} />
         <br />
         <br />
         <CustomForm.IDNumber
@@ -39,7 +77,9 @@ const RegisterDoctor = () => {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />
+        <Button value="Register Doctor" onClick={submitDoctor} />
       </CustomForm>
+      {message}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-// import axios from "axios";
+import axios from "axios";
 
 export const makeGETrequest = async (url, token = "") => {
   try {
@@ -36,5 +36,27 @@ export const makePOSTrequest = async (url, data, token = "") => {
   } catch (err) {
     console.error("Error posting data:", data);
     return err;
+  }
+};
+
+export const makePOSTrequestForMultipleFormData = async (
+  url,
+  formData,
+  token = ""
+) => {
+  try {
+    // axios returns a data object on the response and we extract it using destructuring syntax below and data gives us data coming from backend
+    const { data } = await axios.post(url, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error posting data:", error);
+    // error.response.data gives us the data from the backend
+    return error.response.data;
   }
 };
