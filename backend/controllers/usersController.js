@@ -84,9 +84,9 @@ const usersController = {
         const files = await fs.promises.readdir(uploadsDir);
 
         //Find th file with the corresponding user ID, regardless of the extension
-        const imageFile = files.find((file) => {
-          file.startsWith(doctor.idnumber);
-        });
+        const imageFile = files.find((file) =>
+          file.startsWith(doctor.idnumber)
+        );
 
         var base64Image = "";
 
