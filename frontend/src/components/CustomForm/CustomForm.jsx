@@ -78,8 +78,8 @@ CustomForm.Phone = function PhoneField(props) {
 
 CustomForm.MedicalRecord = function MedicalRecordField(props) {
   return (
-    <input
-      type="number"
+    <textarea
+      type="text"
       name="medicalrecord"
       rows={10}
       placeholder="Enter a new Medical Record"

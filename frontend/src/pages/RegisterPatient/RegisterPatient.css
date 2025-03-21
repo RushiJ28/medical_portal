@@ -1,18 +1,39 @@
+/* Updated CSS */
 .registerpatient-container {
-  max-width: 70vw;
+  max-width: 500px;
   margin: 100px auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 25px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: Arial, sans-serif;
 }
 
 .registerpatient-container h2 {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   font-size: 24px;
+  color: #007bff;
 }
 
-@media screen and (min-width: 800px) {
+label {
+  display: block;
+  text-align: left;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+.response-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 15px;
+}
+/* Responsive Design */
+@media screen and (max-width: 800px) {
   .registerpatient-container {
-    width: 500px;
+    width: 90vw;
+    padding: 15px;
   }
 }
