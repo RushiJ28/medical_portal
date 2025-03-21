@@ -69,6 +69,15 @@ router.post(
 
 router.get("/search", doctorsController.searchDoctor);
 
+router.post(
+  "/updatecontact",
+  verifyToken,
+  checkIDNumber,
+  checkEmail,
+  checkPhoneNumber,
+  doctorsController.updateContact
+);
+
 router.use((err, req, res, next) => {
   if (req.uploadedImageFilePath) {
     fs.unlink(req.uploadedImageFilePath, (err) => {

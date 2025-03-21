@@ -2,27 +2,60 @@ import "./SearchDoctor.css";
 import { useState } from "react";
 import CustomForm from "../../components/CustomForm/CustomForm";
 import Button from "../../components/Button/Button";
-import { makeGETrequest } from "../../utils/api";
+import { makeGETrequest, makePOSTrequest } from "../../utils/api";
+import { useSelector } from "react-redux";
 
 const SearchDoctor = () => {
   const [idnumber, setIdNumber] = useState("");
   const [messageDoc, setMessageDoc] = useState("");
   const [doctor, setDoctor] = useState({});
-  //   const [updatedEmail, setUpdatedEmail] = useState("");
-  //   const [updatedPhone, setUpdatedPhone] = useState("");
+  const [updatedContact, setUpdatedContact] = useState({
+    email: "",
+    phone: "",
+  });
+  const [showUpdateFields, setShowUpdateFields] = useState(false);
+  const [showUpdateBtn, setShowUpdateBtn] = useState(false);
+
+  const userSelector = useSelector((state) => state.user);
+
+  const handleInputChange = (e) => {
+    setUpdatedContact({ ...updatedContact, [e.target.name]: e.target.value });
+  };
 
   async function submitSearch(e) {
     e.preventDefault();
+
+    if (!idnumber.trim()) {
+      setMessageDoc("Please enter a valid ID number.");
+      return;
+    }
+
     const res = await makeGETrequest(
       `http://localhost:5000/doctors/search?idnumber=${idnumber}`
     );
     setMessageDoc(res.msg);
 
-    if (res.doctor) {
+    if (userSelector.admin) setShowUpdateBtn(!showUpdateBtn);
+
+    setDoctor(res.doctor ? JSON.parse(res.doctor) : null);
+  }
+
+  async function updateContact(e) {
+    e.preventDefault();
+    const res = await makePOSTrequest(
+      "http://localhost:5000/doctors/updatecontact",
+      {
+        idnumber: doctor.idnumber,
+        ...updatedContact,
+      },
+      localStorage.getItem("token")
+    );
+
+    if (res.status === 201) {
+      setShowUpdateFields(!showUpdateFields);
       setDoctor(JSON.parse(res.doctor));
-    } else {
-      setDoctor({});
     }
+    setMessageDoc(res.msg);
   }
 
   return (
@@ -34,10 +67,10 @@ const SearchDoctor = () => {
           onChange={(e) => setIdNumber(e.target.value)}
         />
         <Button value="Search" onClick={submitSearch} />
-        <br />
       </CustomForm>
+      {messageDoc && <p className="error-message">{messageDoc}</p>}
 
-      {doctor.username ? (
+      {doctor.username && (
         <div className="doctor-card">
           <h3>Doctor Details</h3>
           <p>
@@ -53,8 +86,31 @@ const SearchDoctor = () => {
             <strong>Phone No.:</strong> {doctor.phone}
           </p>
         </div>
-      ) : (
-        <p className="error-message">{messageDoc}</p>
+      )}
+      <br />
+
+      {/*Only admin can update constact info*/}
+      {showUpdateBtn && (
+        <Button
+          value="Update Contact Info"
+          onClick={() => setShowUpdateFields(!showUpdateFields)}
+        />
+      )}
+      <br />
+      {doctor && showUpdateFields && (
+        <CustomForm>
+          <CustomForm.Email
+            name="email"
+            value={updatedContact.email}
+            onChange={handleInputChange}
+          />
+          <CustomForm.Phone
+            name="phone"
+            value={updatedContact.phone}
+            onChange={handleInputChange}
+          />
+          <Button value="Update" onClick={updateContact} />
+        </CustomForm>
       )}
     </div>
   );

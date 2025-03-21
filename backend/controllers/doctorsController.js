@@ -124,6 +124,64 @@ const doctorsController = {
       }
     }
   },
+
+  updateContact: async (req, res) => {
+    try {
+      const { phone, email, idnumber } = req.body;
+
+      const db = await getDatabase();
+      const admin = await db.collection("admin").findOne({
+        email: req.decodedtoken.email,
+      });
+
+      if (admin) {
+        //we need to check if a doctor or patient already exist with the email or phone before we update
+        const doctorExists = await db.collection("doctors").findOne({
+          $or: [{ email: req.body.email }, { phone: req.body.phone }],
+        });
+        const patientExists = await db.collection("patients").findOne({
+          $or: [{ email: req.body.email }, { phone: req.body.phone }],
+        });
+        if (doctorExists || patientExists) {
+          return returnStatus(
+            res,
+            404,
+            true,
+            "This email or phone already exists."
+          );
+        }
+        const doctor = await db.collection("doctors").findOneAndUpdate(
+          { idnumber: idnumber },
+          {
+            $set: {
+              phone: phone,
+              email: email,
+            },
+          },
+          //build in key value for updated vlaues {returnDocument}
+          { returnDocument: "after", project: { _id: 0, password: 0 } } //Return the modified document without _id and password
+        );
+
+        if (!doctor) {
+          return returnStatus(res, 404, true, "Doctor was not found");
+        }
+
+        const doctorJson = JSON.stringify(doctor);
+
+        return returnStatus(res, 201, false, "Doctor Updated", {
+          doctor: doctorJson,
+        });
+      }
+      return returnStatus(res, 401, true, "Unathorized");
+    } catch (err) {
+      console.log(err);
+      return returnStatus(res, 500, true, "Internal Server Error");
+    } finally {
+      if (client) {
+        await client.close();
+      }
+    }
+  },
 };
 
 module.exports = doctorsController;
