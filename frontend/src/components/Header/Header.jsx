@@ -104,6 +104,11 @@ const Header = () => {
               <Link to="/signin">Sign In</Link>
             </li>
           )}
+          {userSelector.username === "admin" && (
+            <li className="nav-item">
+              <Link to="/adminpanel">Admin Panela</Link>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
