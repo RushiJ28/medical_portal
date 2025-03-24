@@ -1,18 +1,48 @@
+/* SearchPatient.css */
 .searchpatient-container {
-  max-width: 70vw;
+  max-width: 600px;
   margin: 100px auto;
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .searchpatient-container h2 {
+  text-align: center;
   margin-bottom: 20px;
   font-size: 24px;
+  color: #333;
 }
 
-@media screen and (min-width: 800px) {
+.patient-details {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 5px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.patient-details p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.message {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #d9534f;
+}
+
+@media screen and (max-width: 800px) {
   .searchpatient-container {
-    width: 500px;
+    width: 90%;
+    padding: 15px;
   }
 }

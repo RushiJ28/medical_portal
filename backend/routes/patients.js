@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const paitentsController = require("../controllers/patientsController");
+const patientsController = require("../controllers/patientsController");
 const verifyToken = require("../middlewares/verifyToken");
 const {
   checkIDNumber,
@@ -20,7 +20,28 @@ router.post(
   checkAddress,
   checkPhoneNumber,
   checkMedicalRecord,
-  paitentsController.registerPatient
+  patientsController.registerPatient
+);
+
+router.get("/search", patientsController.searchPatient);
+
+//Only doctors can add new medical reocrd so verify if it is doctor
+router.post(
+  "/addnewmedicalrecord",
+  verifyToken,
+  checkIDNumber,
+  checkMedicalRecord,
+  patientsController.addNewMedicalRecord
+);
+
+//Only admin can update info of a patient
+router.post(
+  "/updatecontact",
+  verifyToken,
+  checkIDNumber,
+  checkEmail,
+  checkPhoneNumber,
+  patientsController.updateContact
 );
 
 router.use((err, res, req, next) => {

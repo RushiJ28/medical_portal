@@ -89,6 +89,127 @@ const patientsController = {
       }
     }
   },
+
+  searchPatient: async (req, res) => {
+    try {
+      const db = await getDatabase();
+
+      const patient = await db
+        .collection("patients")
+        .findOne(
+          { idnumber: req.query.idnumber },
+          { projection: { _id: 0, password: 0 } }
+        );
+
+      if (patient) {
+        const patientJson = JSON.stringify(patient);
+        returnStatus(res, 200, false, "Patient Found", {
+          patient: patientJson,
+        });
+      } else {
+        return returnStatus(res, 400, true, "Patient Not Found");
+      }
+    } catch (err) {
+      console.error(err);
+      return returnStatus(res, 500, true, "Internal Server Error");
+    } finally {
+      if (client) {
+        await client.close();
+      }
+    }
+  },
+
+  addNewMedicalRecord: async (req, res) => {
+    try {
+      const db = await getDatabase();
+
+      const doctor = await db
+        .collection("doctors")
+        .findOne({ email: req.decodedtoken.email });
+
+      if (doctor) {
+        const patient = await db.collection("patients").findOneAndUpdate(
+          { idnumber: req.body.idnumber },
+          {
+            $push: {
+              medicalrecord: {
+                date: new Date().toLocaleDateString("en-GB"),
+                record: req.body.medicalrecord,
+              },
+            },
+          },
+          { returnDocument: "after", projection: { _id: 0, password: 0 } }
+        );
+        if (!patient) {
+          return returnStatus(res, 404, true, "Patient Not Found");
+        }
+
+        const patientJson = JSON.stringify(patient);
+
+        return returnStatus(res, 201, false, "New Record Added", {
+          patient: patientJson,
+        });
+      }
+      return returnStatus(res, 404, true, "Doctor Not Found");
+    } catch (err) {
+      console.error(err);
+      return returnStatus(res, 500, true, "Internal Server Error");
+    } finally {
+      if (client) {
+        await client.close();
+      }
+    }
+  },
+
+  updateContact: async (req, res) => {
+    try {
+      const { phone, email, idnumber } = req.body;
+
+      const db = await getDatabase();
+
+      const admin = await db.collection("admin").findOne({
+        email: req.decodedtoken.email,
+      });
+
+      if (admin) {
+        const adminEmailExists = await db
+          .collection("admin")
+          .findOne({ email: email });
+        const doctorEmailExists = await db
+          .collection("doctors")
+          .findOne({ email: email });
+
+        if (adminEmailExists || doctorEmailExists) {
+          return returnStatus(res, 404, true, "You can't use this email");
+        }
+
+        const patient = await db
+          .collection("patients")
+          .findOneAndUpdate(
+            { idnumber: req.body.idnumber },
+            { $set: { phone: phone, email: email } },
+            { returnDocument: "after", projection: { _id: 0, password: 0 } }
+          );
+
+        if (!patient) {
+          return returnStatus(res, 404, true, "Patient was not found");
+        }
+
+        const patientJson = JSON.stringify(patient);
+        return returnStatus(res, 201, false, "Patient updated", {
+          patient: patientJson,
+        });
+      }
+      return returnStatus(res, 401, true, "Unauthorised");
+    } catch (err) {
+      console.error(err);
+      return returnStatus(res, 500, true, "Internal Server Error");
+    } finally {
+      if (client) {
+        await client.close();
+      }
+    }
+  },
 };
 
 module.exports = patientsController;
