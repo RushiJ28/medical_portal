@@ -1,6 +1,25 @@
-.App {
-  text-align: center;
+/* Ensure full-page height for proper footer placement */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
+
+.App {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Pushes content up and keeps footer at bottom */
+}
+
+main {
+  flex-grow: 1; /* Expands to fill remaining space */
+}
+
 .App-logo {
   height: 50px;
   pointer-events: none;

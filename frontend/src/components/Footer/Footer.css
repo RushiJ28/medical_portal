@@ -1,10 +1,39 @@
 .footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #333;
-  text-align: center;
+  background-color: #004080;
   color: white;
-  padding: 10px 0;
+  padding: 10px 0; /* Reduced padding to make it smaller */
+  font-size: 12px; /* Smaller text size */
+  text-align: center;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  margin-top: auto; /* Ensures it stays at the bottom */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+  margin: 5px;
+}
+
+.footer-section h4 {
+  font-size: 14px; /* Smaller heading */
+  margin-bottom: 5px;
+  border-bottom: 1px solid white;
+  display: inline-block;
+  padding-bottom: 3px;
+}
+
+.footer-section p,
+.footer-section ul {
+  font-size: 12px; /* Smaller content text */
+  line-height: 1.3;
 }

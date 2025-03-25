@@ -1,56 +1,83 @@
+/* Full Page Background */
+body {
+  background: linear-gradient(to right, #e3f2fd, #ffffff); /* Light blue to white gradient */
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 /* Home Container */
 .home-container {
-  max-width: 80vw;
+  max-width: 80%;
   margin: 100px auto;
-  padding: 20px;
+  padding: 40px 20px;
   text-align: center;
-  font-family: Arial, sans-serif;
-}
-
-/* Features Section (Aligned Center) */
-.features {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap; /* Ensures responsiveness */
-}
-
-/* Individual Feature Box */
-.feature {
-  width: 300px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  text-align: center;
-  background: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease-in-out;
-}
-
-.feature:hover {
-  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Headings */
-.feature h3 {
-  margin-top: 0;
-  color: #007bff;
+.home-container h2 {
+  font-size: 28px;
+  color: #004080;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
-/* Paragraph */
-.feature p {
-  margin-bottom: 15px;
+.home-container h3 {
+  font-size: 18px;
   color: #555;
 }
 
-/* Buttons (Styled Links) */
+/* Features Section */
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+/* Feature Box */
+.feature {
+  width: 320px;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  background: #ffffff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Feature Headings */
+.feature h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Feature Description */
+.feature p {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+/* Feature Buttons */
 .feature a {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 12px 20px;
   background-color: #007bff;
-  color: #fff;
+  color: #ffffff;
   text-decoration: none;
-  border-radius: 10px;
+  border-radius: 8px;
   transition: background 0.3s ease-in-out;
   font-weight: bold;
 }
@@ -59,14 +86,4 @@
   background-color: #0056b3;
 }
 
-/* Responsive Design for Small Screens */
-@media screen and (max-width: 800px) {
-  .features {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .feature {
-    width: 90%;
-  }
-}
+/* Responsive Design for Small*
